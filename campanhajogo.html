@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Chooser</title>
+<style>
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f4f4f4;
+}
+.container {
+  display: flex;
+  gap: 20px;
+}
+img {
+  width: 360px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+img:hover {
+  transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <img id="img1" src="" alt="Choice 1">
+  <img id="img2" src="" alt="Choice 2">
+</div>
+
+<script>
+const totalImages = 32;
+let images = [];
+
+// Create array of all image URLs
+for (let i = 1; i <= totalImages; i++) {
+  images.push(`https://raw.githubusercontent.com/julianX0/campanhaimages/main/campanhaimages/${i}.jpg`);
+}
+
+// Shuffle function
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Shuffle images initially
+images = shuffle(images);
+
+let index = 0;
+const img1 = document.getElementById("img1");
+const img2 = document.getElementById("img2");
+
+// Initialize with first two images
+img1.src = images[index++];
+img2.src = images[index++];
+
+function getNextImage(excludeSrc1, excludeSrc2) {
+  if (index >= images.length) {
+    // All images shown, stop
+    return null;
+  }
+  let next = images[index++];
+  if (next === excludeSrc1 || next === excludeSrc2) {
+    // Skip this image if it's already displayed
+    return getNextImage(excludeSrc1, excludeSrc2);
+  }
+  return next;
+}
+
+function replaceImage(clicked, other) {
+  const nextImg = getNextImage(clicked.src, other.src);
+  if (nextImg) {
+    other.src = nextImg;
+  } else {
+    alert("All images have been shown!");
+  }
+}
+
+img1.addEventListener("click", () => replaceImage(img1, img2));
+img2.addEventListener("click", () => replaceImage(img2, img1));
+</script>
+</body>
+</html>
