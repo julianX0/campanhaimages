@@ -10,23 +10,41 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: #f4f4f4;
+  margin: 0;
 }
+
 .container {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
+
 img {
   width: 360px;
-  height: 300px;
-  object-fit: cover;
+  max-width: 90vw;
+  height: auto;
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s;
 }
+
 img:hover {
   transform: scale(1.05);
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  img {
+    width: 90vw;
+    height: auto;
+  }
 }
 </style>
 </head>
@@ -65,19 +83,17 @@ const img2 = document.getElementById("img2");
 img1.src = images[index++];
 img2.src = images[index++];
 
-function getNextImage(excludeSrc1, excludeSrc2) {
-  if (index >= images.length) {
-    // All images shown, stop
-    return null;
-  }
+// Get next image avoiding duplicates
+function getNextImage(exclude1, exclude2) {
+  if (index >= images.length) return null; // stop when all images used
   let next = images[index++];
-  if (next === excludeSrc1 || next === excludeSrc2) {
-    // Skip this image if it's already displayed
-    return getNextImage(excludeSrc1, excludeSrc2);
+  if (next === exclude1 || next === exclude2) {
+    return getNextImage(exclude1, exclude2); // skip duplicates
   }
   return next;
 }
 
+// Replace the other image on click
 function replaceImage(clicked, other) {
   const nextImg = getNextImage(clicked.src, other.src);
   if (nextImg) {
