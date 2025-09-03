@@ -8,11 +8,28 @@
 body {
   font-family: sans-serif;
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* stack banners + container */
   align-items: center;
   min-height: 100vh;
   background: #f4f4f4;
   margin: 0;
+}
+
+.banner {
+  width: 100%;
+  height: 120px; /* adjust depending on banner size */
+  background-size: cover;
+  background-position: center;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+.top-banner {
+  background-image: url("https://raw.githubusercontent.com/julianX0/campanhaimages/main/campanhaimages/AF_Folheto_Hortasasassadsad.jpg");
+}
+
+.bottom-banner {
+  background-image: url("https://raw.githubusercontent.com/julianX0/campanhaimages/main/campanhaimages/ffa.jpg");
 }
 
 .container {
@@ -49,10 +66,18 @@ img:hover {
 </style>
 </head>
 <body>
+
+<!-- Top Banner -->
+<div class="banner top-banner"></div>
+
+<!-- Image Chooser -->
 <div class="container">
   <img id="img1" src="" alt="Choice 1">
   <img id="img2" src="" alt="Choice 2">
 </div>
+
+<!-- Bottom Banner -->
+<div class="banner bottom-banner"></div>
 
 <script>
 const totalImages = 32;
@@ -83,7 +108,9 @@ const img2 = document.getElementById("img2");
 img1.src = images[index++];
 img2.src = images[index++];
 
-// Get next image avoiding duplicates
+/**
+ * Get next image avoiding duplicates
+ */
 function getNextImage(exclude1, exclude2) {
   if (index >= images.length) return null; // stop when all images used
   let next = images[index++];
@@ -93,7 +120,9 @@ function getNextImage(exclude1, exclude2) {
   return next;
 }
 
-// Replace the other image on click
+/**
+ * Replace the other image on click
+ */
 function replaceImage(clicked, other) {
   const nextImg = getNextImage(clicked.src, other.src);
   if (nextImg) {
@@ -108,4 +137,5 @@ img2.addEventListener("click", () => replaceImage(img2, img1));
 </script>
 </body>
 </html>
+
 
