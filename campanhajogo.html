@@ -15,22 +15,20 @@ body {
   margin: 0;
 }
 
-/* Popup content wrapper */
+/* ===== Popup intro ===== */
 .popup-content {
   position: relative;
   display: inline-block;
 }
 
-/* Popup image */
 .popup-image {
   max-width: 80%;
   border-radius: 12px;
 }
 
-/* Button overlaid in the center */
 .popup-button {
   position: absolute;
-  bottom: 20px;   /* move up or down */
+  bottom: 20px;   /* adjust position */
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
@@ -57,7 +55,7 @@ body {
 
 /* ===== Game container ===== */
 .container {
-  display: none; /* hidden until Start */
+  display: flex; /* visible once game starts */
   gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
@@ -165,16 +163,12 @@ function replaceImage(clicked, other) {
 img1.addEventListener("click", () => replaceImage(img1, img2));
 img2.addEventListener("click", () => replaceImage(img2, img1));
 
-// ===== Start button logic =====
+// Start button logic
 document.getElementById("startBtn").addEventListener("click", () => {
-  document.getElementById("popup").style.display = "none";
-  document.getElementById("game").style.display = "flex";
-  initGame();
+  document.getElementById("popup").style.display = "none"; // hide popup
+  document.getElementById("gameContainer").style.display = "block"; // show game
+  initGame(); // start with first two images
 });
 </script>
 </body>
 </html>
-
-
-
-
