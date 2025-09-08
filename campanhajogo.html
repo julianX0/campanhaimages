@@ -58,13 +58,11 @@ body {
 }
 
 img.choice {
-  width: 100%;
-  max-width: 330px;
+  width: 330px;
   height: auto;
   border-radius: 16px;
   cursor: pointer;
   object-fit: cover;
-  transition: transform 0.2s;
 }
 
 img.choice:hover {
@@ -82,11 +80,11 @@ img.choice:hover {
 }
 
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    gap: 15px;
-  }
+  .container { flex-direction: column; gap: 15px; }
 }
+</style>
+</head>
+<body>
 
 <div id="popup">
   <div class="popup-content">
@@ -163,6 +161,7 @@ document.getElementById("startBtn").addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
