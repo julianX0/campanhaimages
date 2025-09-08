@@ -61,13 +61,13 @@ body {
 }
 
 img.choice {
+  flex: 1 1 0;
+  display: block;
   width: 100%;
-  width: 360px;
-  max-width: 100%;
   height: auto;
-  border-radius: 0px;
+  border-radius: 0;
   cursor: pointer;
-  transition: transform 0.2s;
+  object-fit: cover;
 }
 
 img.choice:hover {
@@ -172,3 +172,4 @@ document.getElementById("startBtn").addEventListener("click", () => {
 </script>
 </body>
 </html>
+
