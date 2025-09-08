@@ -7,7 +7,6 @@
 <style>
 body {
   font-family: sans-serif;
-  display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
@@ -41,14 +40,12 @@ body {
   transform: translateX(-50%) scale(1.05);
 }
 
-.top-banner, .bottom-banner, .middle-banner {
+.top-banner, .bottom-banner {
   width: 100%;
   max-width: 400px;
   height: auto;
   object-fit: cover;
   display: block;
-  margin: 10px 0;
-  border-radius: 8px;
 }
 
 .container {
@@ -61,7 +58,7 @@ body {
 }
 
 img.choice {
-  width: 330px;
+  width: 300px;
   height: auto;
   border-radius: 16px;
   cursor: pointer;
@@ -73,16 +70,24 @@ img.choice:hover {
   transform: scale(1.05);
 }
 
+.middle-banner {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+  margin: 0;
+  border-radius: 8px;
+  display: block;
+}
+
 @media (max-width: 768px) {
-  img.choice {
-    width: 330px; /* keep fixed width on mobile */
-  }
+  .container { flex-direction: column; gap: 15px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Popup Intro -->
+<!-- Intro Popup -->
 <div id="popup">
   <div class="popup-content">
     <img class="popup-image" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20final.jpg" alt="Intro">
@@ -96,31 +101,23 @@ img.choice:hover {
 
   <div class="container">
     <img id="img1" class="choice" src="" alt="Choice 1">
-    <img class="middle-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20finalaa.jpg">
+    <img class="middle-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20finalaa.jpg" alt="Middle Banner">
     <img id="img2" class="choice" src="" alt="Choice 2">
   </div>
 
-  <img class="bottom-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/bannerdown.jpg" alt="Bottom Banner">
+  <img class="bottom-banner" src="https://julianx0.github.io/campanhaimages/bannerdown.jpg" alt="Bottom Banner">
 </div>
 
 <script>
-// === IMAGE SETUP ===
 const totalImages = 32;
 let images = [];
 for (let i = 1; i <= totalImages; i++) {
   images.push(`https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/${i}.jpg`);
 }
 
-// Map each image to a custom message
-const imageMessages = {};
-for (let i = 1; i <= totalImages; i++) {
-  imageMessages[`https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/${i}.jpg`] = `You chose image #${i}!`;
-}
-
-// Shuffle
 function shuffle(array) {
-  for (let i = array.length-1; i>0; i--) {
-    const j = Math.floor(Math.random() * (i+1));
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
@@ -128,95 +125,79 @@ function shuffle(array) {
 images = shuffle(images);
 
 let index = 0;
+let lastChosenImage = null;
+
 const img1 = document.getElementById("img1");
 const img2 = document.getElementById("img2");
 
-// === GAME LOGIC ===
 function initGame() {
+  index = 0;
+  images = shuffle(images);
   img1.src = images[index++];
   img2.src = images[index++];
+  lastChosenImage = null;
 }
 
-// Get next image avoiding duplicates
 function getNextImage(exclude1, exclude2) {
   if (index >= images.length) return null;
   let next = images[index++];
-  if (next === exclude1 || next === exclude2) {
-    return getNextImage(exclude1, exclude2);
-  }
+  if (next === exclude1 || next === exclude2) return getNextImage(exclude1, exclude2);
   return next;
 }
 
-// Replace other image
 function replaceImage(clicked, other) {
+  lastChosenImage = clicked.src;
   const nextImg = getNextImage(clicked.src, other.src);
   if (nextImg) {
     other.src = nextImg;
   } else {
-    // No more images → show final popup
-    showEndPopup(clicked.src);
+    showEndPopup(lastChosenImage);
   }
 }
+
 img1.addEventListener("click", () => replaceImage(img1, img2));
 img2.addEventListener("click", () => replaceImage(img2, img1));
 
-// === START BUTTON ===
 document.getElementById("startBtn").addEventListener("click", () => {
   document.getElementById("popup").style.display = "none";
   document.getElementById("gameContainer").style.display = "block";
   initGame();
 });
 
-// === END POPUP FUNCTION ===
-function showEndPopup(finalImageSrc) {
-  const message = imageMessages[finalImageSrc] || "You made a choice!";
+function showEndPopup(finalImage) {
+  const endPopup = document.createElement('div');
+  endPopup.style.position = 'fixed';
+  endPopup.style.top = '0';
+  endPopup.style.left = '0';
+  endPopup.style.width = '100%';
+  endPopup.style.height = '100%';
+  endPopup.style.background = 'rgba(0,0,0,0.7)';
+  endPopup.style.display = 'flex';
+  endPopup.style.justifyContent = 'center';
+  endPopup.style.alignItems = 'center';
+  endPopup.style.zIndex = '1000';
 
-  const popup = document.createElement("div");
-  popup.id = "endPopup";
-  popup.style = `
-    position:fixed; top:0; left:0; width:100%; height:100%;
-    background:rgba(0,0,0,0.7); display:flex;
-    justify-content:center; align-items:center; z-index:1000;
+  endPopup.innerHTML = `
+    <div style="background:white; padding:20px; border-radius:12px; text-align:center; max-width:90vw;">
+      <img src="${finalImage}" style="max-width:300px; border-radius:12px;"><br><br>
+      <p>Congratulations!</p>
+      <p>You chose this final image.</p>
+      <button id="closeEndPopup" style="padding:10px 20px; margin:5px;">Close</button>
+      <button id="restartEndPopup" style="padding:10px 20px; margin:5px;">Restart</button>
+    </div>
   `;
 
-  const content = document.createElement("div");
-  content.style = `
-    background:white; padding:20px; border-radius:12px;
-    text-align:center; max-width:400px; width:90%;
-  `;
+  document.body.appendChild(endPopup);
 
-  const img = document.createElement("img");
-  img.src = finalImageSrc;
-  img.style = "max-width:200px; display:block; margin:0 auto 10px;";
+  document.getElementById('closeEndPopup').addEventListener('click', () => {
+    endPopup.remove();
+  });
 
-  const p = document.createElement("p");
-  p.textContent = message;
-
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "Close";
-  closeBtn.style = "margin:5px;";
-  closeBtn.onclick = () => popup.remove();
-
-  const restartBtn = document.createElement("button");
-  restartBtn.textContent = "Restart";
-  restartBtn.style = "margin:5px;";
-  restartBtn.onclick = () => {
-    popup.remove();
-    restartGame();
-  };
-
-  content.append(img, p, closeBtn, restartBtn);
-  popup.appendChild(content);
-  document.body.appendChild(popup);
-}
-
-// === RESTART GAME ===
-function restartGame() {
-  index = 0;
-  images = shuffle(images);
-  initGame();
+  document.getElementById('restartEndPopup').addEventListener('click', () => {
+    endPopup.remove();
+    initGame();
+  });
 }
 </script>
-
 </body>
 </html>
