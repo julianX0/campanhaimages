@@ -14,7 +14,6 @@ body {
   margin: 0;
 }
 
-/* ===== Popup intro ===== */
 .popup-content {
   position: relative;
   display: inline-block;
@@ -27,7 +26,7 @@ body {
 
 .popup-button {
   position: absolute;
-  bottom: 34%;   /* adjust position */
+  bottom: 34%;
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
@@ -41,7 +40,6 @@ body {
   transform: translateX(-50%) scale(1.05);
 }
 
-/* ===== Banners ===== */
 .top-banner, .bottom-banner {
   width: 100%;
   max-width: 360px;
@@ -50,9 +48,8 @@ body {
   display: block;
 }
 
-/* ===== Game container ===== */
 .container {
-  display: flex; /* visible once game starts */
+  display: flex;
   gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
@@ -74,7 +71,6 @@ img.choice:hover {
   transform: scale(1.05);
 }
 
-/* Stack images on phones */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -89,7 +85,6 @@ img.choice:hover {
 </head>
 <body>
 
-<!-- Popup intro -->
 <div id="popup">
   <div class="popup-content">
     <img class="popup-image" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20final.jpg" alt="Intro">
@@ -97,18 +92,14 @@ img.choice:hover {
   </div>
 </div>
 
-<!-- Hidden game container -->
 <div id="gameContainer" style="display:none;">
-  <!-- Top Banner -->
   <img class="top-banner" src="https://julianx0.github.io/campanhaimages/AF_Folheto_Hortasasassadsad.jpg" alt="Top Banner">
 
-  <!-- Image Chooser -->
   <div class="container">
     <img id="img1" class="choice" src="" alt="Choice 1">
     <img id="img2" class="choice" src="" alt="Choice 2">
   </div>
 
-  <!-- Bottom Banner -->
   <img class="bottom-banner" src="https://julianx0.github.io/campanhaimages/bannerdown.jpg" alt="Bottom Banner">
 </div>
 
@@ -116,12 +107,10 @@ img.choice:hover {
 const totalImages = 32;
 let images = [];
 
-// Build array of all image URLs
 for (let i = 1; i <= totalImages; i++) {
   images.push(`https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/${i}.jpg`);
 }
 
-// Shuffle array function
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -135,13 +124,11 @@ let index = 0;
 const img1 = document.getElementById("img1");
 const img2 = document.getElementById("img2");
 
-// Initialize with first two images
 function initGame() {
   img1.src = images[index++];
   img2.src = images[index++];
 }
 
-// Get next image avoiding duplicates
 function getNextImage(exclude1, exclude2) {
   if (index >= images.length) return null;
   let next = images[index++];
@@ -151,7 +138,6 @@ function getNextImage(exclude1, exclude2) {
   return next;
 }
 
-// Replace other image on click
 function replaceImage(clicked, other) {
   const nextImg = getNextImage(clicked.src, other.src);
   if (nextImg) {
@@ -163,13 +149,13 @@ function replaceImage(clicked, other) {
 img1.addEventListener("click", () => replaceImage(img1, img2));
 img2.addEventListener("click", () => replaceImage(img2, img1));
 
-// Start button logic
 document.getElementById("startBtn").addEventListener("click", () => {
-  document.getElementById("popup").style.display = "none"; // hide popup
-  document.getElementById("gameContainer").style.display = "block"; // show game
-  initGame(); // start with first two images
+  document.getElementById("popup").style.display = "none";
+  document.getElementById("gameContainer").style.display = "block";
+  initGame();
 });
 </script>
 </body>
 </html>
+
 
