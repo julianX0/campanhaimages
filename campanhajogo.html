@@ -87,6 +87,7 @@ img.choice:hover {
 </head>
 <body>
 
+<!-- Intro Popup -->
 <div id="popup">
   <div class="popup-content">
     <img class="popup-image" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20final.jpg" alt="Intro">
@@ -94,6 +95,7 @@ img.choice:hover {
   </div>
 </div>
 
+<!-- Game Container -->
 <div id="gameContainer" style="display:none;">
   <img class="top-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/up23333.jpg" alt="Top Banner">
 
@@ -129,8 +131,11 @@ const img1 = document.getElementById("img1");
 const img2 = document.getElementById("img2");
 
 function initGame() {
+  index = 0;
+  images = shuffle(images);
   img1.src = images[index++];
   img2.src = images[index++];
+  lastChosenImage = null;
 }
 
 function getNextImage(exclude1, exclude2) {
@@ -177,7 +182,8 @@ function showEndPopup(finalImage) {
       <img src="${finalImage}" style="max-width:300px; border-radius:12px;"><br><br>
       <p>Congratulations!</p>
       <p>You chose this final image.</p>
-      <button id="closeEndPopup" style="padding:10px 20px; margin-top:10px;">Close</button>
+      <button id="closeEndPopup" style="padding:10px 20px; margin:5px;">Close</button>
+      <button id="restartEndPopup" style="padding:10px 20px; margin:5px;">Restart</button>
     </div>
   `;
 
@@ -186,8 +192,12 @@ function showEndPopup(finalImage) {
   document.getElementById('closeEndPopup').addEventListener('click', () => {
     endPopup.remove();
   });
+
+  document.getElementById('restartEndPopup').addEventListener('click', () => {
+    endPopup.remove();
+    initGame();
+  });
 }
 </script>
 </body>
 </html>
-
