@@ -1,91 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Image Chooser</title>
 <style>
-body {
-  font-family: sans-serif;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  background: #f0f0f0;
-  margin: 0;
-}
+  body {
+    font-family: sans-serif;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f0f0;
+    margin: 0;
+  }
 
-.popup-content {
-  position: relative;
-  display: inline-block;
-}
+  /* popup intro (start) */
+  .popup-content { position: relative; display: inline-block; }
+  .popup-image { max-width: 100%; border-radius: 0; display:block; }
+  .popup-button {
+    position: absolute;
+    bottom: 34%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    max-width: 315px;
+    width: 100%;
+    height: auto;
+    transition: transform .2s;
+  }
+  .popup-button:hover { transform: translateX(-50%) scale(1.05); }
 
-.popup-image {
-  max-width: 100%;
-  border-radius: 0px;
-}
+  /* banners */
+  .top-banner, .bottom-banner { width: 100%; max-width: 400px; height: auto; object-fit: cover; display:block; margin:0; }
 
-.popup-button {
-  position: absolute;
-  bottom: 34%;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: pointer;
-  max-width: 315px;
-  width: 100%;
-  height: auto;
-  transition: transform 0.2s;
-}
+  /* chooser layout */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+  }
 
-.popup-button:hover {
-  transform: translateX(-50%) scale(1.05);
-}
+  img.choice {
+    width: 300px; /* change to desired fixed width */
+    height: auto;
+    border-radius: 16px;
+    cursor: pointer;
+    object-fit: cover;
+    display:block;
+    transition: transform .18s;
+  }
+  img.choice:hover { transform: scale(1.05); }
 
-.top-banner, .bottom-banner {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  object-fit: cover;
-  display: block;
-}
+  .middle-banner {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 8px;
+    display: block;
+  }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin: 0;
-  padding: 0;
-}
+  /* END-OF-GAME POPUP (hidden until needed) */
+  #endPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;           /* shown when game ends */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+  .end-card {
+    background: #fff;
+    border-radius: 12px;
+    max-width: 420px;
+    width: 96%;
+    padding: 18px;
+    text-align: center;
+  }
+  .end-card img {
+    max-width: 260px;
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: 8px auto 12px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  .end-card h2 { margin: 6px 0 10px; font-size: 1.15rem; }
+  .end-card p { margin: 0 0 14px; color: #333; }
 
-img.choice {
-  width: 300px;
-  height: auto;
-  border-radius: 16px;
-  cursor: pointer;
-  object-fit: cover;
-}
+  .end-buttons { display:flex; gap:12px; justify-content:center; }
+  .btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn.primary { background:#007bff; color:white; }
+  .btn.ghost { background:#f0f0f0; color:#111; }
 
-img.choice:hover {
-  transform: scale(1.05);
-}
-
-.middle-banner {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  object-fit: cover;
-  margin: 0;
-  border-radius: 8px;
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .container { flex-direction: column; gap: 15px; }
-}
+  @media (max-width: 768px) {
+    .container { flex-direction: column; gap: 15px; }
+  }
 </style>
 </head>
 <body>
 
+<!-- START POPUP -->
 <div id="popup">
   <div class="popup-content">
     <img class="popup-image" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20final.jpg" alt="Intro">
@@ -93,28 +121,58 @@ img.choice:hover {
   </div>
 </div>
 
+<!-- GAME (hidden until start) -->
 <div id="gameContainer" style="display:none;">
   <img class="top-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/up23333.jpg" alt="Top Banner">
 
   <div class="container">
-  <img id="img1" class="choice" src="" alt="Choice 1">
+    <img id="img1" class="choice" src="" alt="Choice 1">
+    <img class="middle-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20finalaa.jpg" alt="Middle Banner">
+    <img id="img2" class="choice" src="" alt="Choice 2">
+  </div>
 
-  <img class="middle-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20finalaa.jpg">
-
-  <img id="img2" class="choice" src="" alt="Choice 2">
+  <img class="bottom-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/bannerdown.jpg" alt="Bottom Banner">
 </div>
 
-  <img class="bottom-banner" src="https://julianx0.github.io/campanhaimages/bannerdown.jpg" alt="Bottom Banner">
+<!-- END-OF-GAME POPUP -->
+<div id="endPopup" aria-hidden="true">
+  <div class="end-card" role="dialog" aria-modal="true">
+    <h2 id="endTitle">All images shown!</h2>
+    <img id="endImage" src="" alt="Final image">
+    <p id="endPhrase">You finished the game.</p>
+    <div class="end-buttons">
+      <button id="restartBtn" class="btn primary">Restart</button>
+      <button id="closeBtn" class="btn ghost">Close</button>
+    </div>
+  </div>
 </div>
 
 <script>
+/*
+  Behavior:
+  - When the engine runs out of images (no next image), we show the end popup.
+  - The popup shows a phrase based on the final (remaining) image.
+  - Edit the 'phrases' object to map image numbers to custom phrases.
+*/
+
+/* --- config: put custom phrases here keyed by image number --- */
+const phrases = {
+  // example: if the final image is campanhaimages/7.jpg show this phrase
+  "1": "Nice pick — image 1 says: You're a trendsetter!",
+  "2": "Image 2: Bold choice!",
+  "3": "Image 3: Classic and reliable.",
+  // add entries for other images...
+  // "32": "You found the rare one!"
+};
+
+/* --- image source list (your repo structure) --- */
 const totalImages = 32;
 let images = [];
-
 for (let i = 1; i <= totalImages; i++) {
   images.push(`https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/${i}.jpg`);
 }
 
+/* shuffle */
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -124,15 +182,23 @@ function shuffle(array) {
 }
 images = shuffle(images);
 
+/* state */
 let index = 0;
-const img1 = document.getElementById("img1");
-const img2 = document.getElementById("img2");
+const img1 = document.getElementById('img1');
+const img2 = document.getElementById('img2');
 
+/* init two images */
 function initGame() {
-  img1.src = images[index++];
-  img2.src = images[index++];
+  index = 0;
+  if (images.length < 2) {
+    alert('Not enough images.');
+    return;
+  }
+  img1.src = images[index++] || '';
+  img2.src = images[index++] || '';
 }
 
+/* get next or null if finished */
 function getNextImage(exclude1, exclude2) {
   if (index >= images.length) return null;
   let next = images[index++];
@@ -142,21 +208,78 @@ function getNextImage(exclude1, exclude2) {
   return next;
 }
 
+/* show end popup with phrase based on final image (remainingImageSrc) */
+function showEndPopup(remainingImageSrc) {
+  // extract number from URL if possible
+  const m = (remainingImageSrc || '').match(/\/(\d+)\.jpg$/);
+  const id = m ? m[1] : null;
+  const title = document.getElementById('endTitle');
+  const phraseEl = document.getElementById('endPhrase');
+  const imgEl = document.getElementById('endImage');
+
+  // phrase lookup
+  const phrase = id && phrases[id] ? phrases[id] : (id ? `You got image #${id}.` : 'All images have been shown!');
+  title.textContent = 'Game finished';
+  phraseEl.textContent = phrase;
+  imgEl.src = remainingImageSrc || '';
+  imgEl.alt = `Final image ${id || ''}`;
+
+  // show overlay
+  const endPopup = document.getElementById('endPopup');
+  endPopup.style.display = 'flex';
+  endPopup.setAttribute('aria-hidden', 'false');
+}
+
+/* replacement logic: when no next image, show end popup.
+   We treat the "remaining" image as the one that WOULD have been replaced (the 'other' element),
+   since the user clicked to replace it but there was no next image. */
 function replaceImage(clicked, other) {
   const nextImg = getNextImage(clicked.src, other.src);
   if (nextImg) {
     other.src = nextImg;
   } else {
-    alert("All images have been shown!");
+    // game finished: show phrase for the image that remained (other.src).
+    showEndPopup(other.src);
   }
 }
-img1.addEventListener("click", () => replaceImage(img1, img2));
-img2.addEventListener("click", () => replaceImage(img2, img1));
 
-document.getElementById("startBtn").addEventListener("click", () => {
-  document.getElementById("popup").style.display = "none";
-  document.getElementById("gameContainer").style.display = "block";
+/* attach handlers */
+img1.addEventListener('click', () => replaceImage(img1, img2));
+img2.addEventListener('click', () => replaceImage(img2, img1));
+
+/* UI: start popup handling */
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('popup').style.display = 'none';
+  document.getElementById('gameContainer').style.display = 'block';
   initGame();
+});
+
+/* restart: reshuffle, hide end popup and restart */
+document.getElementById('restartBtn').addEventListener('click', () => {
+  // reshuffle and restart
+  images = shuffle(images.slice(0)); // shuffle existing array copy
+  index = 0;
+  document.getElementById('endPopup').style.display = 'none';
+  document.getElementById('gameContainer').style.display = 'block';
+  document.getElementById('endPopup').setAttribute('aria-hidden', 'true');
+  initGame();
+});
+
+/* close only hides the end popup (game stays as-is) */
+document.getElementById('closeBtn').addEventListener('click', () => {
+  document.getElementById('endPopup').style.display = 'none';
+  document.getElementById('endPopup').setAttribute('aria-hidden', 'true');
+});
+
+/* Bonus: allow pressing Escape to close end popup */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const endPopup = document.getElementById('endPopup');
+    if (endPopup.style.display === 'flex') {
+      endPopup.style.display = 'none';
+      endPopup.setAttribute('aria-hidden', 'true');
+    }
+  }
 });
 </script>
 </body>
