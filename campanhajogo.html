@@ -7,7 +7,6 @@
 <style>
 body {
   font-family: sans-serif;
-  display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
@@ -57,13 +56,16 @@ body {
   gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 img.choice {
+  width: 100%;
   width: 360px;
   max-width: 100%;
   height: auto;
-  border-radius: 12px;
+  border-radius: 0px;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -170,6 +172,7 @@ document.getElementById("startBtn").addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
