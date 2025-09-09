@@ -204,7 +204,7 @@ document.getElementById("startBtn").addEventListener("click", () => {
 });
 
 function showEndPopup(finalImage) {
-  const message = imageMessages[finalImage] || "This was your favorite proposal!";
+  const message = imageMessages[finalImage] || "";
   
   const endPopup = document.createElement('div');
   endPopup.style.position = 'fixed';
@@ -242,6 +242,7 @@ function showEndPopup(finalImage) {
 </script>
 </body>
 </html>
+
 
 
 
