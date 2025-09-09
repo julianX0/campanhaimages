@@ -204,8 +204,9 @@ document.getElementById("startBtn").addEventListener("click", () => {
 });
 
 function showEndPopup(finalImage) {
-  const message = imageMessages[finalImage] || "";
-  
+  const message = imageMessages[finalImage] || "This was your favorite proposal!";
+  const extraImage = "URL_DA_TUA_IMAGEM_AQUI"; // Coloca aqui a imagem que queres mostrar
+
   const endPopup = document.createElement('div');
   endPopup.style.position = 'fixed';
   endPopup.style.top = '0';
@@ -220,11 +221,12 @@ function showEndPopup(finalImage) {
 
   endPopup.innerHTML = `
     <div style="background:white; padding:20px; border-radius:12px; text-align:center; max-width:90vw;">
-      <img src="${finalImage}" style="max-width:300px; border-radius:12px;"><br><br>
+      <img src="${finalImage}" style="max-width:300px; border-radius:12px; margin-bottom:10px;"><br>
+      <img src="${extraImage}" style="max-width:200px; border-radius:8px; margin-bottom:15px;"><br>
+      <p>Tira print, partilha nas redes</p>
       <p>${message}</p>
-      <p style="font-weight:bold; margin-top:15px;">📸 Tira print, partilha nas redes</p>
-      <button id="closeEndPopup" style="padding:20px 40px; margin:5px; font-size:18px;">Fechar</button>
-      <button id="restartEndPopup" style="padding:20px 40px; margin:5px; font-size:18px;">Recomeçar</button>
+      <button id="closeEndPopup" style="padding:15px 40px; margin:5px; font-size:18px; background-color:#ff4d4d; color:white; border:none; border-radius:8px; cursor:pointer;">Fechar</button>
+      <button id="restartEndPopup" style="padding:15px 40px; margin:5px; font-size:18px; background-color:#4CAF50; color:white; border:none; border-radius:8px; cursor:pointer;">Recomeçar</button>
     </div>
   `;
 
@@ -242,6 +244,7 @@ function showEndPopup(finalImage) {
 </script>
 </body>
 </html>
+
 
 
 
