@@ -204,6 +204,16 @@ document.getElementById("startBtn").addEventListener("click", () => {
 });
 
 function showEndPopup(finalImage) {
+  // 🔹 Send the final choice to Google Sheets
+  fetch("https://script.google.com/macros/s/AKfycbxqjG-3WtBrL3X03w8-yCUenve5aAk9L_FeB5YlisX95j85SEDnI1VXRHfs2lLDn430dQ/exec", {
+    method: "POST",
+    body: JSON.stringify({ choice: finalImage }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.text())
+  .then(data => console.log("Saved to Google Sheets:", data))
+  .catch(err => console.error("Error:", err));
+  
   const message = imageMessages[finalImage] || "This was your favorite proposal!";
   const extraImage = "https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/up3.jpg";
 
@@ -244,6 +254,7 @@ function showEndPopup(finalImage) {
 </script>
 </body>
 </html>
+
 
 
 
