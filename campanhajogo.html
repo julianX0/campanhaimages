@@ -87,7 +87,6 @@ img.choice:hover {
 </head>
 <body>
 
-<!-- Intro Popup -->
 <div id="popup">
   <div class="popup-content">
     <img class="popup-image" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/pagina%20final.jpg" alt="Intro">
@@ -95,7 +94,6 @@ img.choice:hover {
   </div>
 </div>
 
-<!-- Game Container -->
 <div id="gameContainer" style="display:none;">
   <img class="top-banner" src="https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/up23333.jpg" alt="Top Banner">
 
@@ -115,12 +113,10 @@ for (let i = 1; i <= totalImages; i++) {
   images.push(`https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/${i}.jpg`);
 }
 
-// ✅ Custom messages per image
 const imageMessages = {
   "https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/1.jpg": "You chose the first proposal – great choice!",
   "https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/2.jpg": "Second option was your favorite!",
-  "https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/3.jpg": "You picked number 3, awesome!",
-  // ...add messages for all 32 images if you want
+  "https://raw.githubusercontent.com/julianX0/campanhaimages/refs/heads/main/campanhaimages/3.jpg": "You picked number 3, awesome!"
 };
 
 function shuffle(array) {
