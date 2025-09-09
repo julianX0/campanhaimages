@@ -207,13 +207,9 @@ function showEndPopup(finalImage) {
   // 🔹 Send the final choice to Google Sheets
   fetch("https://script.google.com/macros/s/AKfycbxqjG-3WtBrL3X03w8-yCUenve5aAk9L_FeB5YlisX95j85SEDnI1VXRHfs2lLDn430dQ/exec", {
     method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
     body: JSON.stringify({ choice: finalImage })
   })
-  .then(res => res.json())
+  .then(res => res.text())
   .then(data => console.log("Saved to Google Sheets:", data))
   .catch(err => console.error("Error:", err));
 
@@ -257,6 +253,7 @@ function showEndPopup(finalImage) {
 </script>
 </body>
 </html>
+
 
 
 
